@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Meshes/Street.tres" type="PlaneMesh" id=1]
+
+[sub_resource type="ConcavePolygonShape" id=1]
+data = PoolVector3Array( -4, -16, 0, -4, 16, 0, 4, 16, 0, -4, -16, 0, 4, 16, 0, 4, -16, 0 )
+
+[node name="Street" type="MeshInstance"]
+mesh = ExtResource( 1 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( -1.62921e-07, 1, -1.62921e-07, 0, -1.62921e-07, -1, -1, -1.62921e-07, 2.65431e-14, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}

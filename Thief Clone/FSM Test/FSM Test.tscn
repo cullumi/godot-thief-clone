@@ -1,0 +1,180 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://FSM Test/FSM Test.gd" type="Script" id=1]
+[ext_resource path="res://FSM Test/UI.gd" type="Script" id=2]
+[ext_resource path="res://FSM Test/TestPlayer.gd" type="Script" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://FSM Test/Tagger.gd" type="Script" id=5]
+[ext_resource path="res://addons/net.kivano.fsm/content/fsm.gd" type="Script" id=6]
+[ext_resource path="res://addons/net.kivano.fsm/assets/ico2d.png" type="Texture" id=7]
+[ext_resource path="res://FSM Test/FSM-Test/states/Wandering/Wandering.tscn" type="PackedScene" id=8]
+[ext_resource path="res://FSM Test/FSM-Test/states/Searching/Searching.tscn" type="PackedScene" id=9]
+[ext_resource path="res://FSM Test/FSM-Test/states/Attacking/Attacking.tscn" type="PackedScene" id=10]
+[ext_resource path="res://FSM Test/FSM-Test/states/Alert/Alert.tscn" type="PackedScene" id=11]
+[ext_resource path="res://FSM Test/FSM-Test/transitions/Start Wandering/Start Wandering.tscn" type="PackedScene" id=12]
+[ext_resource path="res://FSM Test/FSM-Test/transitions/Start Attacking/Start Attacking.tscn" type="PackedScene" id=13]
+[ext_resource path="res://FSM Test/FSM-Test/transitions/Start Searching/Start Searching.tscn" type="PackedScene" id=14]
+[ext_resource path="res://FSM Test/FSM-Test/transitions/Become Alerted/Become Alerted.tscn" type="PackedScene" id=15]
+[ext_resource path="res://FSM Test/PathFollow2D.gd" type="Script" id=16]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 30, 30 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32.0577, 32.1192 )
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 847.322, 222.822, 0, 0, 0, 0, 624.608, 79.8859, 0, 0, 0, 0, 330.426, 83.21, 0, 0, 0, 0, 119.345, 239.442, 0, 0, 0, 0, 117.683, 428.916, 0, 0, 0, 0, 327.101, 551.907, 0, 0, 0, 0, 669.483, 551.907, 0, 0, 0, 0, 848.984, 432.24, 0, 0, 0, 0, 847.322, 222.822 )
+}
+
+[node name="FSM Test" type="Node"]
+script = ExtResource( 1 )
+
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+
+[node name="Tagger State" type="Label" parent="UI"]
+margin_left = 887.382
+margin_top = 551.72
+margin_right = 955.382
+margin_bottom = 565.72
+text = "TAGGER STATE"
+
+[node name="Player" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 214.796, 128.877 )
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 1 )
+
+[node name="Tagger" type="Sprite" parent="."]
+editor/display_folded = true
+self_modulate = Color( 0.309804, 1, 0.772549, 1 )
+position = Vector2( 762.632, 371.053 )
+z_index = -1
+texture = ExtResource( 4 )
+script = ExtResource( 5 )
+speed = 50
+
+[node name="Detection Radius" type="Area2D" parent="Tagger"]
+show_behind_parent = true
+scale = Vector2( 4, 4 )
+
+[node name="Sprite" type="Sprite" parent="Tagger/Detection Radius"]
+self_modulate = Color( 0, 0.415686, 1, 0.498039 )
+show_behind_parent = true
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tagger/Detection Radius"]
+shape = SubResource( 2 )
+
+[node name="FSM2D" type="Node2D" parent="."]
+editor/display_folded = true
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_icon": ExtResource( 7 )
+}
+path2LogicRoot = NodePath("..")
+onlyActiveStateOnTheScene = false
+initManually = false
+updateMode = 1
+receiceSignalsOnly4ActiveStatesAndTransitions = true
+enableDebug = false
+"Initial state:" = ""
+"Create new:/Subdirectory for FSM nodes:" = "FSM-Test"
+"Create new:/Create state with name:" = null
+"Create new:/Create transition with name:" = null
+GraphData = {
+"Alert": Vector2( 389, 413 ),
+"Alert_": Vector2( 389, 413 ),
+"Alert__": Vector2( 405, 372 ),
+"Attacking": Vector2( 719, 370 ),
+"Attacking_": Vector2( 719, 370 ),
+"Attacking__": Vector2( 719, 370 ),
+"Become Alerted": Vector2( 226, 214 ),
+"Become Alerted_": Vector2( 226, 214 ),
+"Become Alerted__": Vector2( 226, 214 ),
+"Chasing": Vector2( 850, 223 ),
+"Chasing_": Vector2( 850, 223 ),
+"Chasing__": Vector2( 840, 316 ),
+"Fleeing": Vector2( 594, 571 ),
+"Fleeing_": Vector2( 594, 571 ),
+"Fleeing__": Vector2( 560, 691 ),
+"Searching": Vector2( 380, 72 ),
+"Searching_": Vector2( 380, 72 ),
+"Searching__": Vector2( 380, 72 ),
+"Start Attacking": Vector2( 719, 69 ),
+"Start Attacking_": Vector2( 719, 69 ),
+"Start Attacking__": Vector2( 719.5, 85 ),
+"Start Chasing": Vector2( 705, 451 ),
+"Start Chasing_": Vector2( 705, 451 ),
+"Start Chasing__": Vector2( 650, 67 ),
+"Start Fleeing": Vector2( 797, 470 ),
+"Start Fleeing_": Vector2( 797, 470 ),
+"Start Fleeing__": Vector2( 797, 470 ),
+"Start Searching": Vector2( 700, 12 ),
+"Start Searching_": Vector2( 700, 12 ),
+"Start Searching__": Vector2( 553, 240 ),
+"Start Wandering": Vector2( 213, 533 ),
+"Start Wandering_": Vector2( 213, 533 ),
+"Start Wandering__": Vector2( 213, 533 ),
+"Wandering": Vector2( 72, 370 ),
+"Wandering to Chasing": Vector2( 386, 174 ),
+"Wandering to Chasing_": Vector2( 386, 174 ),
+"Wandering to Chasing__": Vector2( 386, 174 ),
+"Wandering_": Vector2( 72, 370 ),
+"Wandering__": Vector2( 72, 370 )
+}
+
+[node name="States" type="Node2D" parent="FSM2D"]
+editor/display_folded = true
+
+[node name="Wandering" parent="FSM2D/States" instance=ExtResource( 8 )]
+
+[node name="Searching" parent="FSM2D/States" instance=ExtResource( 9 )]
+
+[node name="Chasing" parent="FSM2D/States" instance=ExtResource( 10 )]
+
+[node name="Alert" parent="FSM2D/States" instance=ExtResource( 11 )]
+
+[node name="Transitions" type="Node2D" parent="FSM2D"]
+editor/display_folded = true
+
+[node name="Start Wandering" parent="FSM2D/Transitions" instance=ExtResource( 12 )]
+path2SourceStates = [ NodePath("../../States/Alert") ]
+path2TargetState = NodePath("../../States/Wandering")
+
+[node name="Start Chasing" parent="FSM2D/Transitions" instance=ExtResource( 13 )]
+path2SourceStates = [ NodePath("../../States/Alert"), NodePath("../../States/Wandering") ]
+path2TargetState = NodePath("../../States/Chasing")
+
+[node name="Start Searching" parent="FSM2D/Transitions" instance=ExtResource( 14 )]
+path2SourceStates = [ NodePath("../../States/Chasing") ]
+path2TargetState = NodePath("../../States/Searching")
+
+[node name="Become Alerted" parent="FSM2D/Transitions" instance=ExtResource( 15 )]
+path2SourceStates = [ NodePath("../../States/Wandering"), NodePath("../../States/Searching") ]
+path2TargetState = NodePath("../../States/Alert")
+intervalBetweenChecks = -1.0
+
+[node name="Patrol Path" type="Path2D" parent="."]
+curve = SubResource( 3 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Patrol Path"]
+position = Vector2( 847.322, 222.822 )
+rotation = -2.57103
+script = ExtResource( 16 )
+[connection signal="state_changed" from="Tagger" to="." method="_on_Tagger_state_changed"]
+[connection signal="area_entered" from="Tagger/Detection Radius" to="Tagger" method="_on_Detection_Radius_area_entered"]
+[connection signal="area_exited" from="Tagger/Detection Radius" to="Tagger" method="_on_Detection_Radius_area_exited"]
+[connection signal="entered" from="FSM2D/States/Wandering" to="Tagger" method="_on_FSMState_entered"]
+[connection signal="entered" from="FSM2D/States/Searching" to="Tagger" method="_on_FSMState_entered"]
+[connection signal="entered" from="FSM2D/States/Chasing" to="Tagger" method="_on_FSMState_entered"]
+[connection signal="entered" from="FSM2D/States/Alert" to="Tagger" method="_on_FSMState_entered"]
